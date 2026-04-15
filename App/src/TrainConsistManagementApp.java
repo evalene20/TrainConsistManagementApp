@@ -1,54 +1,45 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
+import java.util.stream.*;
 
-// Bogie class
 class Bogie {
-    String name;
-    int capacity;
+    private String type;
+    private int capacity;
 
-    Bogie(String name, int capacity) {
-        this.name = name;
+    public Bogie(String type, int capacity) {
+        this.type = type;
         this.capacity = capacity;
     }
 
-    @Override
+    public String getType() {
+        return type;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
     public String toString() {
-        return name + " - Capacity: " + capacity;
+        return type + "(" + capacity + ")";
     }
 }
 
 public class TrainConsistManagementApp {
-
     public static void main(String[] args) {
-
-        // Welcome message
-        System.out.println("=== Train Consist Management App ===");
-
-        // Original list of bogies (same as UC7)
         List<Bogie> bogies = new ArrayList<>();
+
         bogies.add(new Bogie("Sleeper", 72));
-        bogies.add(new Bogie("AC Chair", 54));
-        bogies.add(new Bogie("First Class", 24));
+        bogies.add(new Bogie("AC Chair", 60));
+        bogies.add(new Bogie("Sleeper", 72));
+        bogies.add(new Bogie("First Class", 40));
+        bogies.add(new Bogie("AC Chair", 60));
+        bogies.add(new Bogie("Goods", 100));
 
-        // Display original list
-        System.out.println("Original Bogie List:");
-        bogies.forEach(System.out::println);
+        Map<String, List<Bogie>> groupedBogies =
+                bogies.stream()
+                        .collect(Collectors.groupingBy(Bogie::getType));
 
-        // Filter bogies with capacity > 60 using Stream API
-        List<Bogie> filteredBogies = bogies.stream()
-                .filter(b -> b.capacity > 60)
-                .collect(Collectors.toList());
-
-        // Display filtered bogies
-        System.out.println("\nFiltered Bogies (Capacity > 60):");
-        filteredBogies.forEach(System.out::println);
-
-        // Verify original list remains unchanged
-        System.out.println("\nOriginal List After Filtering (Unchanged):");
-        bogies.forEach(System.out::println);
-
-        // Program continues
-        System.out.println("\nSystem is ready for further operations...");
+        groupedBogies.forEach((type, list) -> {
+            System.out.println(type + " -> " + list);
+        });
     }
 }
