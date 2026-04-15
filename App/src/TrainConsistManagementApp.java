@@ -1,45 +1,39 @@
 import java.util.*;
-import java.util.stream.*;
-
-class Bogie {
-    private String type;
-    private int capacity;
-
-    public Bogie(String type, int capacity) {
-        this.type = type;
-        this.capacity = capacity;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public int getCapacity() {
-        return capacity;
-    }
-
-    public String toString() {
-        return type + "(" + capacity + ")";
-    }
-}
+import java.util.stream.Stream;
 
 public class TrainConsistManagementApp {
+    static class Bogie {
+        String name;
+        int capacity;
+
+        Bogie(String name, int capacity) {
+            this.name = name;
+            this.capacity = capacity;
+        }
+    }
     public static void main(String[] args) {
+        System.out.println("==============================================");
+        System.out.println(" UC10 - Count Total Seats in Train ");
+        System.out.println("==============================================");
+        System.out.println();
+        System.out.println("Bogies in Train: ");
+        Bogie b1 = new Bogie("Sleeper", 72);
+        Bogie b2 = new Bogie("AC Chair", 56);
+        Bogie b3 = new Bogie("First Class", 24);
+        Bogie b4 = new Bogie("Sleeper", 70);
+
         List<Bogie> bogies = new ArrayList<>();
-
-        bogies.add(new Bogie("Sleeper", 72));
-        bogies.add(new Bogie("AC Chair", 60));
-        bogies.add(new Bogie("Sleeper", 72));
-        bogies.add(new Bogie("First Class", 40));
-        bogies.add(new Bogie("AC Chair", 60));
-        bogies.add(new Bogie("Goods", 100));
-
-        Map<String, List<Bogie>> groupedBogies =
-                bogies.stream()
-                        .collect(Collectors.groupingBy(Bogie::getType));
-
-        groupedBogies.forEach((type, list) -> {
-            System.out.println(type + " -> " + list);
-        });
+        bogies.add(b1);
+        bogies.add(b2);
+        bogies.add(b3);
+        bogies.add(b4);
+        for (Bogie bogie : bogies) {
+            System.out.println(bogie.name + " -> " + bogie.capacity);
+        }
+        System.out.println();
+        int result = bogies.stream().mapToInt(b -> b.capacity).sum();
+        System.out.println("Total Seating Capacity of Train: " +result);
+        System.out.println();
+        System.out.println("UC10 aggregation completed...");
     }
 }
