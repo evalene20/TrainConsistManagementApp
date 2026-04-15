@@ -1,45 +1,30 @@
-import java.util.*;
-import java.util.stream.*;
-
-class Bogie {
-    private String type;
-    private int capacity;
-
-    public Bogie(String type, int capacity) {
-        this.type = type;
-        this.capacity = capacity;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public int getCapacity() {
-        return capacity;
-    }
-
-    public String toString() {
-        return type + "(" + capacity + ")";
-    }
-}
+import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class TrainConsistManagementApp {
     public static void main(String[] args) {
-        List<Bogie> bogies = new ArrayList<>();
+        System.out.println("===================================================");
+        System.out.println("UC11 - Validate Train ID & Cargo Codes (Regex)");
+        System.out.println("===================================================");
+        System.out.println();
+        Scanner scanner = new Scanner(System.in);
 
-        bogies.add(new Bogie("Sleeper", 72));
-        bogies.add(new Bogie("AC Chair", 60));
-        bogies.add(new Bogie("Sleeper", 72));
-        bogies.add(new Bogie("First Class", 40));
-        bogies.add(new Bogie("AC Chair", 60));
-        bogies.add(new Bogie("Goods", 100));
+        System.out.print("Enter Train ID (Format: TRN-1234): ");
+        String trainId = scanner.nextLine();
+        System.out.print("Enter Cargo Code (Format: PET-AB): ");
+        String cargoCode = scanner.nextLine();
+        System.out.println();
+        System.out.println("Validation Results: ");
 
-        Map<String, List<Bogie>> groupedBogies =
-                bogies.stream()
-                        .collect(Collectors.groupingBy(Bogie::getType));
+        Pattern pattern1 = Pattern.compile(trainId);
+        Pattern pattern2 = Pattern.compile(cargoCode);
 
-        groupedBogies.forEach((type, list) -> {
-            System.out.println(type + " -> " + list);
-        });
+        boolean isTrainIdValid = trainId.matches("[A-Z]+-\\d+");
+        boolean isCargoIdValid = cargoCode.matches("[A-Z]+-[A-Z]{2}");
+        System.out.println("Train ID Valid: " +isTrainIdValid);
+        System.out.println("Cargo Code Valid: " +isCargoIdValid);
+        System.out.println();
+        System.out.println("UC11 validation completed...");
+        scanner.close();
     }
 }
