@@ -2,6 +2,15 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class TrainConsistManagementApp {
+    static class Bogie {
+        String name;
+        int capacity;
+
+        Bogie(String name, int capacity) {
+            this.name = name;
+            this.capacity = capacity;
+        }
+    }
     public static void main(String[] args) {
         System.out.println("===================================================");
         System.out.println("UC11 - Validate Train ID & Cargo Codes (Regex)");
